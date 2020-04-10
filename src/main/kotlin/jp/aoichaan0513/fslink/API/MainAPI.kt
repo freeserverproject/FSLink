@@ -89,13 +89,6 @@ class MainAPI {
     }
 
     enum class MessageType(val message: String) {
-        // 独自メッセージ
-        GAME_START("${ChatColor.GOLD}ゲームが開始された！"),
-        GAME_END("${ChatColor.GOLD}ゲーム終了！"),
-        GAME_TIMEUP_60("${ChatColor.BOLD}${ChatColor.UNDERLINE}残り1分！"),
-        TAG_START("${ChatColor.RED}鬼がワールドに放たれた！"),
-        TAG_CAUGHT("${ChatColor.RED}%sさんが鬼に捕まった！"),
-
         // 他プロジェクト共通メッセージ
         ARGS("${ChatColor.RED}引数が不正です。"),
         PERMISSION("${ChatColor.RED}権限がありません。"),
