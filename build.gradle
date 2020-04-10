@@ -1,0 +1,68 @@
+buildscript {
+    ext {
+        kotlin_version = '1.3.71'
+        spigot_version = '1.15.2-R0.1-SNAPSHOT'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath group: 'org.jetbrains.kotlin', name: 'kotlin-gradle-plugin', version: kotlin_version
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+group = pluginGroup
+version = pluginVersion
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    jcenter()
+
+    maven {
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+}
+
+dependencies {
+    // Kotlin
+    implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: kotlin_version
+    implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: '1.3.2'
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-script-util'
+
+    compile group: 'org.spigotmc', name: 'spigot-api', version: spigot_version
+    compile group: 'net.luckperms', name: 'api', version: '5.0'
+
+    // データ管理用ライブラリ
+    compile group: 'org.json', name: 'json', version: '20190722'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.19'
+
+    // ツールライブラリ
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    compile group: 'commons-logging', name: 'commons-logging', version: '1.2'
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
+
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+}

@@ -1,0 +1,6 @@
+name: FSLink
+version: @version@
+main: jp.aoichaan0513.fslink.Main
+api-version: 1.13
+depend: [LuckPerms]
+authors: [Aoichaan0513, FreeServer]
