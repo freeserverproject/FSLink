@@ -1,11 +1,12 @@
-package jp.aoichaan0513.fslink.Commands
+package jp.aoichaan0513.fslink.Commands.Main
 
+import jp.aoichaan0513.fslink.Commands.ICommand
 import org.bukkit.command.BlockCommandSender
 import org.bukkit.command.Command
 import org.bukkit.command.ConsoleCommandSender
 import org.bukkit.entity.Player
 
-class BaseFile(name: String) : ICommand(name) {
+class Auth(name: String) : ICommand(name) {
 
     override fun onPlayerCommand(sp: Player, cmd: Command, label: String, args: Array<String>) {}
     override fun onBlockCommand(bs: BlockCommandSender, cmd: Command, label: String, args: Array<String>) {}

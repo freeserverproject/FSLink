@@ -2,19 +2,31 @@ package jp.aoichaan0513.fslink
 
 import jp.aoichaan0513.fslink.API.MainAPI
 import jp.aoichaan0513.fslink.Commands.ICommand
+import jp.aoichaan0513.fslink.Commands.Main.Auth
+import jp.aoichaan0513.fslink.Listeners.PlayerListener
+import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.OnlineStatus
+import net.luckperms.api.LuckPerms
 import org.bukkit.Bukkit
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 
+
 class Main : JavaPlugin() {
 
     override fun onEnable() {
-        instance = this
+        pluginInstance = this
+
+        saveDefaultConfig()
+
+        val provider = Bukkit.getServicesManager().getRegistration(LuckPerms::class.java)
+        if (provider != null)
+            luckPerms = provider.provider
 
         loadCommands()
         loadListeners()
-
-        saveDefaultConfig()
+        loadBot()
 
         Bukkit.getConsoleSender().sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}プラグインを起動しました。")
     }
@@ -25,7 +37,7 @@ class Main : JavaPlugin() {
 
     private fun loadCommands() {
         Bukkit.getConsoleSender().sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}コマンドを読み込んでいます。しばらくお待ちください…")
-        val hashMap = mutableMapOf<String, ICommand>()
+        val hashMap = mutableMapOf<String, ICommand>("auth" to Auth("name"))
         hashMap.map { entry -> getCommand(entry.key)?.setExecutor(entry.value) }
         Bukkit.getConsoleSender().sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}コマンドを${hashMap.size}件読み込みました。")
         return
@@ -33,16 +45,23 @@ class Main : JavaPlugin() {
 
     private fun loadListeners() {
         Bukkit.getConsoleSender().sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}リスナーを読み込んでいます。しばらくお待ちください…")
-        val list = object : ArrayList<Listener>() {
-            init {
-            }
-        }
+        val list = arrayListOf<Listener>(PlayerListener())
         list.map { listener -> Bukkit.getPluginManager().registerEvents(listener, this) }
         Bukkit.getConsoleSender().sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}リスナーを${list.size}件読み込みました。")
         return
     }
 
+    private fun loadBot() {
+        botInstance = JDABuilder()
+                .setToken(config.getString("token"))
+                .setStatus(OnlineStatus.ONLINE)
+                .build()
+    }
+
     companion object {
-        lateinit var instance: JavaPlugin
+        lateinit var pluginInstance: JavaPlugin
+        lateinit var botInstance: JDA
+
+        lateinit var luckPerms: LuckPerms
     }
 }

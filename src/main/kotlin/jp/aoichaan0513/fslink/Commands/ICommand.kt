@@ -37,5 +37,4 @@ abstract class ICommand(private val name: String) : CommandExecutor, TabComplete
             return onConsoleTabComplete(sender, cmd, alias, args)
         return Collections.emptyList()
     }
-
 }
