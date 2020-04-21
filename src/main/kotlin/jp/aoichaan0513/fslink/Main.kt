@@ -3,6 +3,7 @@ package jp.aoichaan0513.fslink
 import jp.aoichaan0513.fslink.API.MainAPI
 import jp.aoichaan0513.fslink.Commands.ICommand
 import jp.aoichaan0513.fslink.Commands.Main.Auth
+import jp.aoichaan0513.fslink.Listeners.BotListener
 import jp.aoichaan0513.fslink.Listeners.PlayerListener
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
@@ -55,6 +56,7 @@ class Main : JavaPlugin() {
         botInstance = JDABuilder()
                 .setToken(config.getString("token"))
                 .setStatus(OnlineStatus.ONLINE)
+                .addEventListeners(BotListener())
                 .build()
     }
 

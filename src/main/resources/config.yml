@@ -1,3 +1,11 @@
+# Botのトークン
 token: TOKEN_IS_HERE
+# サーバーの招待リンク
+inviteLink: https://discord.gg/WudKwEj
+# 認証した際に設定するグループ名
+authedGroup: sabamin
+# 認証した際に実行するコマンド (コンソールから実行)。 {replace:player_name} でプレイヤー名に置き換え。 {replace:player_uuid} でプレイヤーのUUIDに置き換え。
 runCommands:
-  - say 認証したよ！！！！！
+  - say {replace:player_name} さんが認証したよ！！！！！
+# 認証済みのユーザー
+authedUsers:
