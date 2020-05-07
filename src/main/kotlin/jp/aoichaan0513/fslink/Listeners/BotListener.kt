@@ -74,12 +74,16 @@ class BotListener : ListenerAdapter() {
 
                     object : BukkitRunnable() {
                         override fun run() {
-                            for (cmd in Main.pluginInstance.config.getStringList("runCommands"))
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd.replace("{replace:player_name}", p.name!!).replace("{replace:player_uuid}", uuid.toString()))
+                            for (map in Main.pluginInstance.config.getMapList("runCommands")) {
+                                val cmd = (map.get("command") as String).replace("{replace:player_name}", p.name!!).replace("{replace:player_uuid}", uuid.toString())
+                                val type = map.getOrDefault("type", "console") as String
+
+                                Bukkit.dispatchCommand(if (type.equals("player", true) && p.isOnline) p.player!! else Bukkit.getConsoleSender(), cmd)
+                            }
                         }
                     }.runTaskLater(Main.pluginInstance, 0)
 
-                    val embedBuilder = EmbedBuilder().setTimestamp(Instant.now()).setThumbnail("hhttps://minotar.net/helm/${p.uniqueId.toString()}").setTitle("成功").setDescription("${user.asMention} のDiscord アカウントを${MarkdownUtil.bold(p.name!!)}と連携しました。")
+                    val embedBuilder = EmbedBuilder().setTimestamp(Instant.now()).setThumbnail("https://minotar.net/helm/${p.uniqueId.toString()}").setTitle("成功").setDescription("${user.asMention} のDiscord アカウントを${MarkdownUtil.bold(p.name!!)}と連携しました。")
                     channel.sendMessage(embedBuilder.build()).queue()
 
                     if (p.isOnline)
