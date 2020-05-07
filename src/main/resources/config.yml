@@ -1,5 +1,7 @@
 # Botのトークン
 token: TOKEN_IS_HERE
+# 認証用チャンネルID
+channelId: 640391038510301184
 # サーバーの招待リンク
 inviteLink: https://discord.gg/WudKwEj
 # 認証した際に設定するグループ名

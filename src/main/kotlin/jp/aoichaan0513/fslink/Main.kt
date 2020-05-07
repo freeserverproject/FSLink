@@ -33,12 +33,13 @@ class Main : JavaPlugin() {
     }
 
     override fun onDisable() {
+        botInstance.shutdownNow()
         Bukkit.getConsoleSender().sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}プラグインを終了しました。")
     }
 
     private fun loadCommands() {
         Bukkit.getConsoleSender().sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}コマンドを読み込んでいます。しばらくお待ちください…")
-        val hashMap = mutableMapOf<String, ICommand>("auth" to Auth("name"))
+        val hashMap = mutableMapOf<String, ICommand>("auth" to Auth("auth"))
         hashMap.map { entry -> getCommand(entry.key)?.setExecutor(entry.value) }
         Bukkit.getConsoleSender().sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}コマンドを${hashMap.size}件読み込みました。")
         return
@@ -61,6 +62,7 @@ class Main : JavaPlugin() {
     }
 
     companion object {
+
         lateinit var pluginInstance: JavaPlugin
         lateinit var botInstance: JDA
 

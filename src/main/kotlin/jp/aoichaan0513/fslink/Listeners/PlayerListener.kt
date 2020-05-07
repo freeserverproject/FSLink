@@ -4,7 +4,10 @@ import jp.aoichaan0513.fslink.API.MainAPI
 import jp.aoichaan0513.fslink.Main
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.ClickEvent
+import net.md_5.bungee.api.chat.ComponentBuilder
+import net.md_5.bungee.api.chat.HoverEvent
 import net.md_5.bungee.api.chat.TextComponent
+import org.bukkit.ChatColor
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
@@ -17,19 +20,17 @@ class PlayerListener : Listener {
         val p = e.player
         val user = Main.luckPerms.userManager.getUser(p.uniqueId)!!
 
-        // 参加した際に認証されていなければメッセージを送信
-        if (user.primaryGroup.isNotEmpty()) {
-            if (Main.luckPerms.groupManager.getGroup(user.primaryGroup)?.displayName.equals("default", true)) {
-                p.spigot().sendMessage()
-                val textComponent1 = TextComponent("${MainAPI.getPrefix(MainAPI.PrefixType.WARNING)}\"")
-                val textComponent2 = TextComponent("/auth")
-                textComponent2.clickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "/auth")
-                val textComponent3 = TextComponent("\"と送信して認証を行ってください。")
-                textComponent1.addExtra(textComponent2)
-                textComponent1.addExtra(textComponent3)
+        // 参加した際に連携されていなければメッセージを送信
+        if (user.primaryGroup.equals("default", true)) {
+            val textComponent1 = TextComponent("${MainAPI.getPrefix(MainAPI.PrefixType.WARNING)}${ChatColor.YELLOW}\"")
+            val textComponent2 = TextComponent("${ChatColor.GOLD}${ChatColor.BOLD}/auth")
+            textComponent2.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ComponentBuilder("${ChatColor.GOLD}${ChatColor.BOLD}${ChatColor.UNDERLINE}クリックでコマンドを実行").create())
+            textComponent2.clickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "/auth")
+            val textComponent3 = TextComponent("${ChatColor.RESET}${ChatColor.YELLOW}\"と実行して連携を行ってください。")
+            textComponent1.addExtra(textComponent2)
+            textComponent1.addExtra(textComponent3)
 
-                p.spigot().sendMessage(ChatMessageType.CHAT, textComponent1)
-            }
+            p.spigot().sendMessage(ChatMessageType.CHAT, textComponent1)
         }
     }
 
