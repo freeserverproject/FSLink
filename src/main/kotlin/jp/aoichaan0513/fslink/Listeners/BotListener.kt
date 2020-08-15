@@ -29,7 +29,7 @@ class BotListener : ListenerAdapter() {
         if (msg.contentRaw.equals("連携解除")) {
             if (Main.pluginInstance.config.contains("authedUsers.${user.id}")) {
                 val uuid = UUID.fromString(Main.pluginInstance.config.getString("authedUsers.${user.idLong}"))
-                val userManager = Main.luckPerms.getUserManager()
+                val userManager = Main.luckPerms.userManager
                 val userFuture = userManager.loadUser(uuid)
 
                 userFuture.thenAcceptAsync { lpUser ->
@@ -83,7 +83,7 @@ class BotListener : ListenerAdapter() {
                         }
                     }.runTaskLater(Main.pluginInstance, 0)
 
-                    val embedBuilder = EmbedBuilder().setTimestamp(Instant.now()).setThumbnail("https://minotar.net/helm/${p.uniqueId.toString()}").setTitle("成功").setDescription("${user.asMention} のDiscord アカウントを${MarkdownUtil.bold(p.name!!)}と連携しました。")
+                    val embedBuilder = EmbedBuilder().setTimestamp(Instant.now()).setThumbnail("https://minotar.net/helm/${p.uniqueId}").setTitle("成功").setDescription("${user.asMention} のDiscord アカウントを${MarkdownUtil.bold(p.name!!)}と連携しました。")
                     channel.sendMessage(embedBuilder.build()).queue()
 
                     if (p.isOnline)
