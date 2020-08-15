@@ -52,7 +52,7 @@ dependencies {
     compile group: 'net.luckperms', name: 'api', version: '5.0'
 
     // Bot
-    compile group: 'net.dv8tion', name: 'JDA', version: '4.1.1_145' //
+    compile group: 'net.dv8tion', name: 'JDA', version: '4.2.0_191' //
 
     // データ管理用ライブラリ
     compile group: 'org.json', name: 'json', version: '20190722'
