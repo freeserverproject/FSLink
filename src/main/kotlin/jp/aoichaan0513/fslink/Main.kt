@@ -15,6 +15,13 @@ import org.bukkit.plugin.java.JavaPlugin
 
 
 class Main : JavaPlugin() {
+    companion object {
+
+        lateinit var pluginInstance: JavaPlugin
+        lateinit var botInstance: JDA
+
+        lateinit var luckPerms: LuckPerms
+    }
 
     override fun onEnable() {
         pluginInstance = this
@@ -59,13 +66,5 @@ class Main : JavaPlugin() {
                 .setStatus(OnlineStatus.ONLINE)
                 .addEventListeners(BotListener())
                 .build()
-    }
-
-    companion object {
-
-        lateinit var pluginInstance: JavaPlugin
-        lateinit var botInstance: JDA
-
-        lateinit var luckPerms: LuckPerms
     }
 }
