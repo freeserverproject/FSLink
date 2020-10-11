@@ -8,6 +8,7 @@ import jp.aoichaan0513.fslink.Listeners.PlayerListener
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.OnlineStatus
+import net.dv8tion.jda.api.requests.GatewayIntent
 import net.luckperms.api.LuckPerms
 import org.bukkit.Bukkit
 import org.bukkit.event.Listener
@@ -61,8 +62,7 @@ class Main : JavaPlugin() {
     }
 
     private fun loadBot() {
-        botInstance = JDABuilder()
-                .setToken(config.getString("token"))
+        botInstance = JDABuilder.create(config.getString("token"), GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
                 .setStatus(OnlineStatus.ONLINE)
                 .addEventListeners(BotListener())
                 .build()
