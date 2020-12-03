@@ -31,7 +31,7 @@ class MainAPI {
             if (isRefresh)
                 for (player: Player in Bukkit.getOnlinePlayers().filter { player -> !hidePlayers.contains(player.uniqueId) })
                     p.showPlayer(player)
-            for (uuid in hidePlayers.filter { uuid -> isPlayerOnline(uuid) }.toSet())
+            for (uuid in hidePlayers.filter { isPlayerOnline(it) }.toSet())
                 p.hidePlayer(Bukkit.getPlayer(uuid)!!)
         }
 
