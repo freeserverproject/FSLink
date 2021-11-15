@@ -31,8 +31,11 @@ class Main : JavaPlugin() {
         saveDefaultConfig()
 
         val provider = Bukkit.getServicesManager().getRegistration(LuckPerms::class.java)
-        if (provider != null)
-            luckPerms = LuckPermsProvider.get()
+        if (provider != null) {
+            luckPerms = provider.provider
+        } else {
+            throw RuntimeException("LuckPerms not found!")
+        }
 
         loadCommands()
         loadListeners()

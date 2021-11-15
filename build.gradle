@@ -49,8 +49,8 @@ dependencies {
     implementation group: 'org.jetbrains.kotlin', name: 'kotlin-script-util'
 
     // Minecraft
-    implementation group: 'org.spigotmc', name: 'spigot-api', version: spigotVersion
-    implementation group: 'net.luckperms', name: 'api', version: '5.3'
+    compileOnly group: 'org.spigotmc', name: 'spigot-api', version: spigotVersion
+    compileOnly group: 'net.luckperms', name: 'api', version: '5.3'
 
     // Bot
     implementation group: 'net.dv8tion', name: 'JDA', version: '4.3.0_346'
