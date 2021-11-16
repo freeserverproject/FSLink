@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.OnlineStatus
 import net.dv8tion.jda.api.requests.GatewayIntent
 import net.luckperms.api.LuckPerms
+import net.luckperms.api.LuckPermsProvider
 import org.bukkit.Bukkit
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
@@ -30,8 +31,11 @@ class Main : JavaPlugin() {
         saveDefaultConfig()
 
         val provider = Bukkit.getServicesManager().getRegistration(LuckPerms::class.java)
-        if (provider != null)
+        if (provider != null) {
             luckPerms = provider.provider
+        } else {
+            throw RuntimeException("LuckPerms not found!")
+        }
 
         loadCommands()
         loadListeners()

@@ -3,7 +3,7 @@ buildscript {
         kotlinVersion = '1.4.20'
         kotlinLanguageVersion = '1.4'
         kotlinApiVersion = '1.4'
-        spigotVersion = '1.16.4-R0.1-SNAPSHOT'
+        spigotVersion = '1.17.1-R0.1-SNAPSHOT'
 
         javaVersion = JavaVersion.VERSION_1_8
     }
@@ -25,7 +25,7 @@ plugins {
 apply plugin: 'kotlin'
 
 group = 'jp.aoichaan0513'
-version = '1.1.4'
+version = '1.1.5'
 
 sourceCompatibility = javaVersion
 targetCompatibility = javaVersion
@@ -36,6 +36,10 @@ repositories {
 
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url 'https://oss.sonatype.org/content/groups/public/' }
+    maven {
+        name 'm2-dv8tion'
+        url 'https://m2.dv8tion.net/releases'
+    }
 }
 
 dependencies {
@@ -45,11 +49,11 @@ dependencies {
     implementation group: 'org.jetbrains.kotlin', name: 'kotlin-script-util'
 
     // Minecraft
-    implementation group: 'org.spigotmc', name: 'spigot-api', version: spigotVersion
-    implementation group: 'net.luckperms', name: 'api', version: '5.2'
+    compileOnly group: 'org.spigotmc', name: 'spigot-api', version: spigotVersion
+    compileOnly group: 'net.luckperms', name: 'api', version: '5.3'
 
     // Bot
-    implementation group: 'net.dv8tion', name: 'JDA', version: '4.2.0_222'
+    implementation group: 'net.dv8tion', name: 'JDA', version: '4.3.0_346'
 
     // ツールライブラリ
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
