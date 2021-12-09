@@ -1,6 +1,7 @@
 package jp.aoichaan0513.fslink.Listeners
 
 import jp.aoichaan0513.fslink.API.MainAPI
+import jp.aoichaan0513.fslink.API.MainAPI.Companion.getPostgrestClient
 import jp.aoichaan0513.fslink.Main
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
@@ -41,6 +42,11 @@ class BotListener : ListenerAdapter() {
 
                         Main.pluginInstance.config.set("authedUsers.${user.idLong}", null)
                         Main.pluginInstance.saveConfig()
+
+                        getPostgrestClient()!!.from<String>("freeserver_user")
+                                .update(mapOf("discord_id" to null))
+                                .eq("mcuuid", uuid)
+                                .execute()
 
                         val embedBuilder = EmbedBuilder().setTimestamp(Instant.now()).setTitle("成功").setDescription("${user.asMention} とMinecraft アカウントとの連携を解除しました。\nMinecraft サーバーに再度参加して認証を行うことが出来ます。")
                         channel.sendMessage(embedBuilder.build()).queue()
@@ -85,6 +91,11 @@ class BotListener : ListenerAdapter() {
 
                     val embedBuilder = EmbedBuilder().setTimestamp(Instant.now()).setThumbnail("https://minotar.net/helm/${p.uniqueId}").setTitle("成功").setDescription("${user.asMention} のDiscord アカウントを${MarkdownUtil.bold(p.name!!)}と連携しました。")
                     channel.sendMessage(embedBuilder.build()).queue()
+
+                    getPostgrestClient()!!.from<String>("freeserver_user")
+                            .update(mapOf("discord_id" to user.id))
+                            .eq("mcuuid", uuid)
+                            .execute()
 
                     if (p.isOnline)
                         p.player!!.sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SUCCESS)}あなたのMinecraft アカウントを${ChatColor.BOLD}${user.asTag}${ChatColor.RESET}${ChatColor.GREEN}と連携しました。")
