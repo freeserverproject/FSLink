@@ -9,8 +9,8 @@ import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.OnlineStatus
 import net.dv8tion.jda.api.requests.GatewayIntent
+import net.dv8tion.jda.api.utils.cache.CacheFlag
 import net.luckperms.api.LuckPerms
-import net.luckperms.api.LuckPermsProvider
 import org.bukkit.Bukkit
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
@@ -66,8 +66,9 @@ class Main : JavaPlugin() {
     }
 
     private fun loadBot() {
-        botInstance = JDABuilder.create(config.getString("token"), GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
+        botInstance = JDABuilder.create(config.getString("token"), GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MEMBERS)
                 .setStatus(OnlineStatus.ONLINE)
+                .disableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE, CacheFlag.EMOTE, CacheFlag.CLIENT_STATUS)
                 .addEventListeners(BotListener())
                 .build()
     }

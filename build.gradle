@@ -32,7 +32,6 @@ targetCompatibility = javaVersion
 
 repositories {
     mavenCentral()
-    jcenter()
 
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url 'https://oss.sonatype.org/content/groups/public/' }
@@ -48,6 +47,8 @@ dependencies {
     implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: '1.4.1'
     implementation group: 'org.jetbrains.kotlin', name: 'kotlin-script-util'
     implementation 'io.supabase:postgrest-kt:0.2.0'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+
 
     // Minecraft
     compileOnly group: 'org.spigotmc', name: 'spigot-api', version: spigotVersion
