@@ -1,6 +1,8 @@
 package jp.aoichaan0513.fslink.Commands.Main
 
 import jp.aoichaan0513.fslink.API.MainAPI
+import jp.aoichaan0513.fslink.API.MainAPI.Companion.getPostgrestClient
+import jp.aoichaan0513.fslink.API.PerseAPI.Companion.fromJson
 import jp.aoichaan0513.fslink.Commands.ICommand
 import jp.aoichaan0513.fslink.Listeners.BotListener
 import jp.aoichaan0513.fslink.Main
@@ -19,9 +21,12 @@ import org.bukkit.entity.Player
 class Auth(name: String) : ICommand(name) {
 
     override fun onPlayerCommand(sp: Player, cmd: Command, label: String, args: Array<String>) {
-        val user = Main.luckPerms.userManager.getUser(sp.uniqueId)!!
+        val discord_id = getPostgrestClient()!!.from<String>("freeserver_user")
+                .select("discord_id")
+                .eq("mcuuid", sp.uniqueId)
+                .execute()
 
-        if (user.primaryGroup.equals("default", true)) {
+        if (fromJson(discord_id.body!!, "discord_id") == null) {
             val code = RandomStringUtils.randomAlphanumeric(6)
             BotListener.hashMap[code] = sp.uniqueId
 
