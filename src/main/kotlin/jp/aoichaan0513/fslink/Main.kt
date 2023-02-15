@@ -51,26 +51,36 @@ class Main : JavaPlugin() {
     }
 
     private fun loadCommands() {
-        Bukkit.getConsoleSender().sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}コマンドを読み込んでいます。しばらくお待ちください…")
-        val hashMap = mutableMapOf<String, ICommand>("auth" to Auth("auth"), "checkverified" to CheckVerified("checkverified"))
+        Bukkit.getConsoleSender()
+            .sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}コマンドを読み込んでいます。しばらくお待ちください…")
+        val hashMap =
+            mutableMapOf<String, ICommand>("auth" to Auth("auth"), "checkverified" to CheckVerified("checkverified"))
         hashMap.map { entry -> getCommand(entry.key)?.setExecutor(entry.value) }
-        Bukkit.getConsoleSender().sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}コマンドを${hashMap.size}件読み込みました。")
+        Bukkit.getConsoleSender()
+            .sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}コマンドを${hashMap.size}件読み込みました。")
         return
     }
 
     private fun loadListeners() {
-        Bukkit.getConsoleSender().sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}リスナーを読み込んでいます。しばらくお待ちください…")
+        Bukkit.getConsoleSender()
+            .sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}リスナーを読み込んでいます。しばらくお待ちください…")
         val list = arrayListOf<Listener>(PlayerListener())
         list.map { listener -> Bukkit.getPluginManager().registerEvents(listener, this) }
-        Bukkit.getConsoleSender().sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}リスナーを${list.size}件読み込みました。")
+        Bukkit.getConsoleSender()
+            .sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}リスナーを${list.size}件読み込みました。")
         return
     }
 
     private fun loadBot() {
-        botInstance = JDABuilder.create(config.getString("token"), GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MEMBERS)
-                .setStatus(OnlineStatus.ONLINE)
-                .disableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE, CacheFlag.EMOTE, CacheFlag.CLIENT_STATUS)
-                .addEventListeners(BotListener())
-                .build()
+        botInstance = JDABuilder.create(
+            config.getString("token"),
+            GatewayIntent.GUILD_MESSAGES,
+            GatewayIntent.DIRECT_MESSAGES,
+            GatewayIntent.GUILD_MEMBERS
+        )
+            .setStatus(OnlineStatus.ONLINE)
+            .disableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE, CacheFlag.EMOTE, CacheFlag.CLIENT_STATUS)
+            .addEventListeners(BotListener())
+            .build()
     }
 }
