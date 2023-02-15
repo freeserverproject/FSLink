@@ -1,6 +1,6 @@
-package jp.aoichaan0513.fslink.Listeners
+package jp.aoichaan0513.fslink.listener
 
-import jp.aoichaan0513.fslink.API.MainAPI
+import jp.aoichaan0513.fslink.api.MainAPI
 import jp.aoichaan0513.fslink.Main
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.ClickEvent

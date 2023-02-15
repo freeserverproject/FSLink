@@ -1,7 +1,7 @@
-package jp.aoichaan0513.fslink.Listeners
+package jp.aoichaan0513.fslink.listener
 
-import jp.aoichaan0513.fslink.API.MainAPI
-import jp.aoichaan0513.fslink.API.MainAPI.Companion.getPostgrestClient
+import jp.aoichaan0513.fslink.api.MainAPI
+import jp.aoichaan0513.fslink.api.MainAPI.Companion.getPostgrestClient
 import jp.aoichaan0513.fslink.Main
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent

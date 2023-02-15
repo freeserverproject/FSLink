@@ -1,10 +1,10 @@
-package jp.aoichaan0513.fslink.Commands.Main
+package jp.aoichaan0513.fslink.commands.main
 
-import jp.aoichaan0513.fslink.API.MainAPI
-import jp.aoichaan0513.fslink.API.MainAPI.Companion.getPostgrestClient
-import jp.aoichaan0513.fslink.API.PerseAPI.Companion.fromJson
-import jp.aoichaan0513.fslink.Commands.ICommand
-import jp.aoichaan0513.fslink.Listeners.BotListener
+import jp.aoichaan0513.fslink.api.MainAPI
+import jp.aoichaan0513.fslink.api.MainAPI.Companion.getPostgrestClient
+import jp.aoichaan0513.fslink.api.PerseAPI.Companion.fromJson
+import jp.aoichaan0513.fslink.commands.ICommand
+import jp.aoichaan0513.fslink.listener.BotListener
 import jp.aoichaan0513.fslink.Main
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.ClickEvent

@@ -1,4 +1,4 @@
-package jp.aoichaan0513.fslink.API
+package jp.aoichaan0513.fslink.api
 
 import com.google.gson.Gson
 import com.google.gson.JsonArray

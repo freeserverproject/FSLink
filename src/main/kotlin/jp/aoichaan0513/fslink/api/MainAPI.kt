@@ -1,4 +1,4 @@
-package jp.aoichaan0513.fslink.API
+package jp.aoichaan0513.fslink.api
 
 import io.supabase.postgrest.PostgrestDefaultClient
 import jp.aoichaan0513.fslink.Main

@@ -1,10 +1,11 @@
 package jp.aoichaan0513.fslink
 
-import jp.aoichaan0513.fslink.API.MainAPI
-import jp.aoichaan0513.fslink.Commands.ICommand
-import jp.aoichaan0513.fslink.Commands.Main.Auth
-import jp.aoichaan0513.fslink.Listeners.BotListener
-import jp.aoichaan0513.fslink.Listeners.PlayerListener
+import jp.aoichaan0513.fslink.api.MainAPI
+import jp.aoichaan0513.fslink.commands.ICommand
+import jp.aoichaan0513.fslink.commands.main.Auth
+import jp.aoichaan0513.fslink.commands.main.CheckVerified
+import jp.aoichaan0513.fslink.listener.BotListener
+import jp.aoichaan0513.fslink.listener.PlayerListener
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.OnlineStatus
@@ -51,7 +52,7 @@ class Main : JavaPlugin() {
 
     private fun loadCommands() {
         Bukkit.getConsoleSender().sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}コマンドを読み込んでいます。しばらくお待ちください…")
-        val hashMap = mutableMapOf<String, ICommand>("auth" to Auth("auth"))
+        val hashMap = mutableMapOf<String, ICommand>("auth" to Auth("auth"), "checkverified" to CheckVerified("checkverified"))
         hashMap.map { entry -> getCommand(entry.key)?.setExecutor(entry.value) }
         Bukkit.getConsoleSender().sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SECONDARY)}コマンドを${hashMap.size}件読み込みました。")
         return
