@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 
-class PerseAPI {
+class ParseAPI {
 
     companion object {
         fun fromJson(json: String, key: String): String? {
