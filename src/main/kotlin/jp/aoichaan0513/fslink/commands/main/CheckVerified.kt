@@ -32,8 +32,8 @@ class CheckVerified(name: String) : ICommand(name){
                 if (player.discord_id != null) {
                     val userFuture = userManager.loadUser(player.mcuuid)
                     userFuture.thenAcceptAsync { lpUser ->
-                        val result1 = lpUser.data().remove(Node.builder("group.${groupName}").build())
-                        val result2 = lpUser.data().add(Node.builder("group.${defaultGroupName}").build())
+                        val result1 = lpUser.data().remove(Node.builder("group.${defaultGroupName}").build())
+                        val result2 = lpUser.data().add(Node.builder("group.${groupName}").build())
                         if (result1 == DataMutateResult.SUCCESS && result2 == DataMutateResult.SUCCESS) {
                             lpUser.primaryGroup = defaultGroupName
                             Main.luckPerms.userManager.saveUser(lpUser)
