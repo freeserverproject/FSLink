@@ -25,6 +25,7 @@ class Auth(name: String) : ICommand(name) {
             ?.from<FreeserverUser>(MainAPI.TableName.FREESERVER_USER.table)
             ?.select("discord_id")
             ?.eq("mcuuid", sp.uniqueId)
+            ?.single()
             ?.executeAndGetSingle<FreeserverUser>()
             ?.discord_id
 
