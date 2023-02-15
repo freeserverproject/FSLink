@@ -22,7 +22,7 @@ class Auth(name: String) : ICommand(name) {
 
     override fun onPlayerCommand(sp: Player, cmd: Command, label: String, args: Array<String>) {
         val discord_id = getPostgrestClient()
-            ?.from<String>(MainAPI.TableName.FREESERVER_USER.table)
+            ?.from<FreeserverUser>(MainAPI.TableName.FREESERVER_USER.table)
             ?.select("discord_id")
             ?.eq("mcuuid", sp.uniqueId)
             ?.executeAndGetSingle<FreeserverUser>()

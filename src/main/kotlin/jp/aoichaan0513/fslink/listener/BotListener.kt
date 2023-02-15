@@ -3,6 +3,7 @@ package jp.aoichaan0513.fslink.listener
 import jp.aoichaan0513.fslink.api.MainAPI
 import jp.aoichaan0513.fslink.api.MainAPI.Companion.getPostgrestClient
 import jp.aoichaan0513.fslink.Main
+import jp.aoichaan0513.fslink.consts.FreeserverUser
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
@@ -43,7 +44,7 @@ class BotListener : ListenerAdapter() {
                         Main.pluginInstance.config.set("authedUsers.${user.idLong}", null)
                         Main.pluginInstance.saveConfig()
 
-                        getPostgrestClient()?.from<String>(MainAPI.TableName.FREESERVER_USER.table)
+                        getPostgrestClient()?.from<FreeserverUser>(MainAPI.TableName.FREESERVER_USER.table)
                             ?.update(mapOf("discord_id" to null))
                             ?.eq("mcuuid", uuid)
                             ?.execute()
@@ -104,10 +105,13 @@ class BotListener : ListenerAdapter() {
                         .setDescription("${user.asMention} のDiscord アカウントを${MarkdownUtil.bold(p.name!!)}と連携しました。")
                     channel.sendMessage(embedBuilder.build()).queue()
 
-                    getPostgrestClient()!!.from<String>("freeserver_user")
-                        .update(mapOf("discord_id" to user.id))
-                        .eq("mcuuid", uuid)
-                        .execute()
+                    var response = getPostgrestClient()
+                        ?.from<FreeserverUser>(MainAPI.TableName.FREESERVER_USER.table)
+                        ?.update(mapOf("discord_id" to user.id))
+                        ?.eq("mcuuid", uuid)
+                        ?.execute()
+
+                    Bukkit.getLogger().info("$response")
 
                     if (p.isOnline)
                         p.player!!.sendMessage("${MainAPI.getPrefix(MainAPI.PrefixType.SUCCESS)}あなたのMinecraft アカウントを${ChatColor.BOLD}${user.asTag}${ChatColor.RESET}${ChatColor.GREEN}と連携しました。")
