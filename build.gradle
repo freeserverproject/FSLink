@@ -25,7 +25,7 @@ plugins {
 apply plugin: 'kotlin'
 
 group = 'jp.aoichaan0513'
-version = '1.1.5'
+version = '1.1.6'
 
 sourceCompatibility = javaVersion
 targetCompatibility = javaVersion
