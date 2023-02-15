@@ -32,7 +32,8 @@ class MainAPI {
 
         fun hidePlayers(p: Player, isRefresh: Boolean = false) {
             if (isRefresh)
-                for (player: Player in Bukkit.getOnlinePlayers().filter { player -> !hidePlayers.contains(player.uniqueId) })
+                for (player: Player in Bukkit.getOnlinePlayers()
+                    .filter { player -> !hidePlayers.contains(player.uniqueId) })
                     p.showPlayer(player)
             for (uuid in hidePlayers.filter { isPlayerOnline(it) }.toSet())
                 p.hidePlayer(Bukkit.getPlayer(uuid)!!)
@@ -69,7 +70,7 @@ class MainAPI {
             return "$backColor> $forwardColor"
         }
 
-        fun getPostgrestClient(): PostgrestDefaultClient?{
+        fun getPostgrestClient(): PostgrestDefaultClient? {
             val serviceKey = Main.pluginInstance.config.getString("supabase.serviceKey")
             val uri = Main.pluginInstance.config.getString("supabase.requestURI")
             if (serviceKey == null || uri == null) {
@@ -77,8 +78,8 @@ class MainAPI {
                 return null
             }
             return PostgrestDefaultClient(
-                    uri = URI(uri),
-                    headers = mapOf("Authorization" to "Bearer $serviceKey", "apikey" to serviceKey)
+                uri = URI(uri),
+                headers = mapOf("Authorization" to "Bearer $serviceKey", "apikey" to serviceKey)
             )
         }
     }
@@ -128,5 +129,11 @@ class MainAPI {
                 return SURVIVAL
             }
         }
+    }
+
+    enum class TableName(val table: String) {
+        FREESERVER_USER("freeserver_user"),
+        BANK_BALANCES("bank_balances"),
+        WALLET_BALANCES("wallet_balances")
     }
 }
