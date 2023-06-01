@@ -7,3 +7,4 @@ authors: [Aoichaan0513, FreeServer]
 
 commands:
   auth:
+  checkverified:

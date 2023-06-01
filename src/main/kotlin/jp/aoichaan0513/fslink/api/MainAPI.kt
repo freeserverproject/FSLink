@@ -1,10 +1,13 @@
-package jp.aoichaan0513.fslink.API
+package jp.aoichaan0513.fslink.api
 
+import io.supabase.postgrest.PostgrestDefaultClient
+import jp.aoichaan0513.fslink.Main
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.GameMode
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
+import java.net.URI
 import java.util.*
 
 class MainAPI {
@@ -29,7 +32,8 @@ class MainAPI {
 
         fun hidePlayers(p: Player, isRefresh: Boolean = false) {
             if (isRefresh)
-                for (player: Player in Bukkit.getOnlinePlayers().filter { player -> !hidePlayers.contains(player.uniqueId) })
+                for (player: Player in Bukkit.getOnlinePlayers()
+                    .filter { player -> !hidePlayers.contains(player.uniqueId) })
                     p.showPlayer(player)
             for (uuid in hidePlayers.filter { isPlayerOnline(it) }.toSet())
                 p.hidePlayer(Bukkit.getPlayer(uuid)!!)
@@ -45,11 +49,11 @@ class MainAPI {
         }
 
         fun isPlayerOnline(p: Player): Boolean {
-            return p != null && p.isOnline
+            return p.isOnline
         }
 
         fun isPlayerOnline(p: OfflinePlayer): Boolean {
-            return p != null && p.isOnline
+            return p.isOnline
         }
 
         // プレイヤーが権限を所持しているか
@@ -64,6 +68,19 @@ class MainAPI {
 
         fun getPrefix(backColor: ChatColor, forwardColor: ChatColor = backColor): String {
             return "$backColor> $forwardColor"
+        }
+
+        fun getPostgrestClient(): PostgrestDefaultClient? {
+            val serviceKey = Main.pluginInstance.config.getString("supabase.serviceKey")
+            val uri = Main.pluginInstance.config.getString("supabase.requestURI")
+            if (serviceKey == null || uri == null) {
+                println("§cserviceKey又はrequestURIが設定されていません,config.ymlを確認してください")
+                return null
+            }
+            return PostgrestDefaultClient(
+                uri = URI(uri),
+                headers = mapOf("Authorization" to "Bearer $serviceKey", "apikey" to serviceKey)
+            )
         }
     }
 
@@ -112,5 +129,11 @@ class MainAPI {
                 return SURVIVAL
             }
         }
+    }
+
+    enum class TableName(val table: String) {
+        FREESERVER_USER("freeserver_user"),
+        BANK_BALANCES("bank_balances"),
+        WALLET_BALANCES("wallet_balances")
     }
 }

@@ -1,4 +1,4 @@
-package jp.aoichaan0513.fslink.Commands
+package jp.aoichaan0513.fslink.commands
 
 import org.bukkit.command.BlockCommandSender
 import org.bukkit.command.Command

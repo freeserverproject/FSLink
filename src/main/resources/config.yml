@@ -13,5 +13,9 @@ runCommands:
     type: console
   - command: say {replace:player_name} さんが認証しました！
     type: player
+# Supabase認証用のキーとエンドポイントURL
+supabase:
+  serviceKey: 'your key here'
+  requestURI: 'your uri here'
 # 認証済みのユーザー
 authedUsers:

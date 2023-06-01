@@ -1,4 +1,4 @@
-package jp.aoichaan0513.fslink.Commands
+package jp.aoichaan0513.fslink.commands
 
 import org.bukkit.command.*
 import org.bukkit.entity.Player
